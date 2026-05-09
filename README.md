@@ -1,12 +1,17 @@
-# 🚀 محاكي جدولة المعالج (SJF & Priority)
-## 🖥️ CPU Scheduling Simulator
+# 🚀 CPU Scheduling Simulator (SJF & Priority)
 
-هذا المشروع هو محاكاة برمجية متكاملة بلغة Java تهدف إلى تحليل وتصور خوارزميات جدولة المعالج (CPU Scheduling) ومقارنتها بشكل رسومي وتفاعلي.
+## 📝 Project Description
+This project is a comprehensive **Java-based simulator** designed to visualize and compare CPU scheduling algorithms. It provides a graphical user interface (GUI) that allows users to input process data and monitor execution through real-time visualization.
+
+### Supported Algorithms:
+- **Shortest Job First (SJF):** Includes both **Preemptive (SRTF)** and **Non-Preemptive** modes.
+- **Priority Scheduling:** **Preemptive** algorithm where the execution order is determined by assigned priority levels.
+- **Gantt Chart:** A dynamic, color-coded chart that visualizes the timeline of process execution.
 
 ---
 
-## 👥 فريق العمل (Team Members)
-| م | الاسم | كود الطالب (ID) |
+## 👥 Team Members | فريق العمل
+| No. | Name | Student ID |
 | :--- | :--- | :--- |
 | 1 | **محمد صلاح محمدي محمد** | 20240839 |
 | 2 | **محمد احمد محمد محمد** | 20240792 |
@@ -17,55 +22,48 @@
 
 ---
 
-## 📝 وصف المشروع (Project Description)
-يوفر البرنامج واجهة رسومية (GUI) تسمح للمستخدم بإدخال بيانات العمليات ومراقبة كيفية تنفيذ المعالج لها من خلال الخوارزميات التالية:
-- **Shortest Job First (SJF):** بنوعيه (Preemptive "SRTF" & Non-Preemptive).
-- **Priority Scheduling:** نظام الأولوية (الأرقام الأقل تعني أولوية أعلى).
-- **Gantt Chart:** رسم بياني ملون يوضح تسلسل التنفيذ الزمني.
+## 📊 Detailed Comparison & Analysis
+*Derived from our simulation results and comparative study.*
 
+### 1. Algorithms Logic & Assumptions
+- **Priority Definition:** We follow the **Lower Value = Higher Priority** rule (e.g., Priority 1 > Priority 5).
+- **Tie-Breaking Rule:** If two processes have the same burst time or priority, the **FCFS** (First-Come-First-Served) rule is applied based on Arrival Time.
+- **Preemption Logic:**
+  - **Priority (Preemptive):** The current process is interrupted if a new process with higher priority arrives.
+  - **SJF (SRTF):** The current process is interrupted if a new process arrives with a shorter remaining burst time.
+- **Input Validation:** The system ensures stability by rejecting negative values, non-numeric data, and duplicate Process IDs.
 
-
----
-
-## 📊 التحليل والمقارنة (Detailed Analysis)
-*مستخلص من نتائج المحاكاة والدراسة المقارنة:*
-
-### 1. منطق الخوارزميات والفرضيات
-- **قاعدة كسر التعادل (Tie-Breaking):** في حالة تساوي وقت التنفيذ أو الأولوية، يتم اللجوء لقاعدة **FCFS** بناءً على وقت الوصول.
-- **نظام المقاطعة (Preemption):**
-  - **Priority:** تتم مقاطعة العملية الحالية فور وصول عملية ذات أولوية أعلى.
-  - **SJF (SRTF):** تتم المقاطعة إذا وصلت عملية وقتها المتبقي أقل من وقت العملية الحالية.
-- **التحقق من البيانات:** يرفض النظام القيم السالبة، البيانات غير الرقمية، والمعرفات المكررة لضمان الاستقرار.
-
-### 2. سيناريوهات الاختبار (Test Scenarios)
-| السيناريو | الهدف من الاختبار | لقطة الشاشة |
+### 2. Test Scenarios & Results
+| Scenario | Description & Objective | Visualization |
 | :--- | :--- | :--- |
-| **Scenario A** | اختبار منطق المقاطعة في SJF للوظائف القصيرة. | ![Scenario A](screenshots/Scenario A.png) |
-| **Scenario B** | توضيح الصراع بين العمليات الطويلة الهامة والعمليات القصيرة العادية. | ![Scenario B](screenshots/Scenario B.png) |
-| **Scenario C** | إظهار مخاطر "المجاعة" (Starvation) للعمليات ذات الأولوية المنخفضة. | ![Scenario C](screenshots/Scenario C.png) |
-| **Scenario D** | اختبار كفاءة النظام في معالجة المدخلات الخاطئة والتحقق من البيانات. | ![Scenario D](screenshots/Scenario D.png) |
+| **Scenario A** | **Basic Mixed Workload:** Confirms the logic where SJF Preemptive interrupts for shorter jobs while Priority focuses on status. | ![Scenario A](screenshots/Scenario A.png) |
+| **Scenario B** | **Conflict (Burst vs Priority):** Reveals the trade-off between urgent long jobs (Priority) and short non-urgent jobs (SJF). | ![Scenario B](screenshots/Scenario B.png) |
+| **Scenario C** | **Fairness & Starvation:** Demonstrates how long jobs in SJF and low-priority jobs in Priority scheduling suffer delays. | ![Scenario C](screenshots/Scenario C.png) |
+| **Scenario D** | **Input Validation:** Shows the simulator's ability to handle invalid data (negative numbers, empty fields) effectively. | ![Scenario D](screenshots/Scenario D.png) |
 
-### 3. ملخص النتائج والتوصيات
-- **الكفاءة:** حققت خوارزمية **SJF Preemptive** أفضل النتائج في تقليل متوسط وقت الانتظار (Average WT).
-- **العدالة:** تعتبر **SJF Non-Preemptive** أكثر عدالة نسبياً لأنها تمنع المقاطعة المتكررة بمجرد بدء العملية.
-- **التوصية:** نوصي بـ **SJF** للأنظمة العامة لزيادة الإنتاجية، وبـ **Priority** للأنظمة الحرجة التي تتطلب تنفيذ مهام طارئة.
+### 3. Analysis Summary
+- **Efficiency:** **SJF Preemptive (SRTF)** performed best in minimizing average Waiting and Turnaround times across most test cases.
+- **Starvation Risk:** Observed in "long jobs" under SJF and "low-priority jobs" under Priority scheduling.
+- **Fairness:** **SJF Non-Preemptive** appeared slightly fairer as it prevents repeated interruptions once a job secures the CPU.
+- **Recommendation:** Use **SJF** for general-purpose efficiency and **Priority** for mission-critical or real-time systems.
 
 ---
 
-## 🛠️ خطوات التشغيل (Build and Run)
-### المتطلبات (Prerequisites)
-- **Java JDK:** الإصدار 17 أو أحدث.
-- **المكتبات:** البرنامج يعتمد على Java Swing (مدمجة في JDK).
+## 🛠️ Build and Run Steps
 
-### التنفيذ (Execution)
-1. **عبر IDE (مثل IntelliJ/VS Code):**
-   - افتح المجلد الرئيسي للمشروع.
-   - قم بتشغيل الملف: `src/gui/MainDashboard.java`.
+### Prerequisites
+- **JDK:** Version 17 or higher.
+- **Library:** Standard Java Swing & AWT (Integrated in JDK).
 
-2. **عبر Command Line:**
+### Execution Steps
+1. **Using an IDE (e.g., IntelliJ / VS Code):**
+   - Open the project root folder.
+   - Run the main class located at: `src/gui/MainDashboard.java`.
+
+2. **Using Command Line:**
    ```bash
-   # Compile
+   # Compile the project
    javac -d out src/model/*.java src/scheduler/*.java src/gui/*.java
    
-   # Run
+   # Run the application
    java -cp out gui.MainDashboard
