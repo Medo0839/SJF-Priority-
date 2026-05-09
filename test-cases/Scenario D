@@ -1,0 +1,15 @@
+Scenario D: Validation Case
+
+ Input Data:
+
+o Burst Time = -2
+o Priority = Empty
+o Arrival = "ABC"
+o ID --->  Duplicate IDs
+
+ Description
+
+"This case demonstrates the simulator’s input handling.
+The system correctly identifies and rejects invalid inputs
+like negative values, empty fields, and non-numeric data.
+This ensures the stability of the scheduling simulation and prevents logical errors in metric calculations."
