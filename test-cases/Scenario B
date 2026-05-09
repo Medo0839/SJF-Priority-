@@ -1,0 +1,14 @@
+Scenario B: Conflict between Burst Time and Priority
+
+ Input Data:
+
+o P1: Arrival=0, Burst=8, Priority=1 (Long but Urgent)
+o P2: Arrival=1, Burst=2, Priority=5 (Short but Not Urgent)
+
+ Description
+
+"This test reveals the policy trade-off.
+Priority scheduling ensures P1 finishes first because it is urgent.
+However, both SJF versions (Preemptive and Non-Preemptive) prefer P2 to minimize waiting time.
+The difference here is that SJF Preemptive will stop P1 immediately at time 1 to run P2,
+while Non-Preemptive will make P2 wait until P1 finishes at time 8."
