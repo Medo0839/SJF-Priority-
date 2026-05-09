@@ -1,0 +1,13 @@
+Scenario A: Basic Mixed Workload
+
+ Input Data:
+
+o P1: Arrival=0, Burst=6, Priority=2
+o P2: Arrival=2, Burst=2, Priority=1
+o P3: Arrival=4, Burst=3, Priority=3
+
+ Description
+"This scenario confirms the fundamental logic of the three algorithms.
+In SJF Non-Preemptive, P1 finishes entirely before P2 starts,
+whereas in SJF Preemptive, P2 interrupts P1 at time 2 because it is shorter.
+Meanwhile, Priority scheduling focuses on the priority values regardless of the burst duration." 
