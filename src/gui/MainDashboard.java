@@ -164,28 +164,49 @@ public class MainDashboard extends JFrame {
         SJFScheduler.calculateSJFNonPreemptive(sListNon, sLogNon); 
         PriorityScheduler.calculatePriority(pList, pLog); 
         
-        double avgSPre = getAvgWT(sListPre);
-        double avgSNon = getAvgWT(sListNon);
-        double avgPri = getAvgWT(pList);
+        double avgWTPre = getAvgWT(sListPre);
+        double avgWTNon = getAvgWT(sListNon);
+        double avgWTPri = getAvgWT(pList);
+
+        double avgRTPre = getAvgRT(sListPre);
+        double avgRTNon = getAvgRT(sListNon);
+        double avgRTPri = getAvgRT(pList);
+
+        double avgTATPre = getAvgTAT(sListPre);
+        double avgTATNon = getAvgTAT(sListNon);
+        double avgTATPri = getAvgTAT(pList);
         
-        display(sjfPreArea, "SJF PREEMPTIVE RESULTS", sListPre, avgSPre);
-        display(sjfNonArea, "SJF NON-PREEMPTIVE RESULTS", sListNon, avgSNon);
-        display(priArea, "PRIORITY RESULTS", pList, avgPri);
+        display(sjfPreArea, "SJF PREEMPTIVE RESULTS", sListPre, avgWTPre);
+        display(sjfNonArea, "SJF NON-PREEMPTIVE RESULTS", sListNon, avgWTNon);
+        display(priArea, "PRIORITY RESULTS", pList, avgWTPri);
 
         updateChart(sjfPreChartCont, sLogPre, "SJF Preemptive Timeline");
         updateChart(sjfNonChartCont, sLogNon, "SJF Non-Preemptive Timeline");
         updateChart(priChartCont, pLog, "Priority Timeline");
 
-        double minWT = Math.min(avgSPre, Math.min(avgSNon, avgPri));
-        String winner = (minWT == avgSPre) ? "SJF Preemptive" : (minWT == avgSNon) ? "SJF Non-Preemptive" : "Priority Scheduling";
+        // بناء تقرير التحليل والشرح
+        StringBuilder analysis = new StringBuilder();
+        analysis.append("📋 ALGORITHM ANALYSIS & COMPARISON 📋\n");
+        analysis.append("------------------------------------------------------------\n\n");
         
-        JOptionPane.showMessageDialog(this, 
-            "🏆 FINAL CONCLUSION 🏆\n" +
-            "------------------------------\n" +
-            "The Winner is: " + winner + "\n" +
-            "SJF Pre Rating: " + getStars(avgSPre) + "\n" +
-            "SJF Non Rating: " + getStars(avgSNon) + "\n" +
-            "Priority Rating: " + getStars(avgPri));
+        analysis.append("1. SJF Preemptive (SRTF):\n");
+        analysis.append("   - Best for: Minimizing Average Waiting Time (Optimal).\n");
+        analysis.append("   - Usage: Real-time systems where short tasks must finish ASAP.\n\n");
+
+        analysis.append("2. SJF Non-Preemptive:\n");
+        analysis.append("   - Best for: Reducing overhead (no context switching mid-burst).\n");
+        analysis.append("   - Usage: Batch processing where task lengths are known.\n\n");
+
+        analysis.append("3. Priority Scheduling:\n");
+        analysis.append("   - Best for: Importance-based execution (VIP tasks first).\n");
+        analysis.append("   - Usage: OS kernel tasks or systems with critical deadlines.\n\n");
+        
+        analysis.append(String.format("Final Stats (WT | RT | TAT):\n"));
+        analysis.append(String.format("- SJF Pre:  %.1f | %.1f | %.1f\n", avgWTPre, avgRTPre, avgTATPre));
+        analysis.append(String.format("- SJF Non:  %.1f | %.1f | %.1f\n", avgWTNon, avgRTNon, avgTATNon));
+        analysis.append(String.format("- Priority: %.1f | %.1f | %.1f", avgWTPri, avgRTPri, avgTATPri));
+
+        JOptionPane.showMessageDialog(this, new JScrollPane(new JTextArea(analysis.toString())), "Scheduling Analysis Report", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void updateChart(JPanel container, List<String[]> log, String title) {
@@ -200,12 +221,6 @@ public class MainDashboard extends JFrame {
         double total = 0;
         for (Process p : list) total += p.waitingTime;
         return total / list.size();
-    }
-
-    private String getStars(double avgWT) {
-        if (avgWT < 5) return "⭐⭐⭐⭐⭐ (Excellent Performance)";
-        if (avgWT < 10) return "⭐⭐⭐⭐ (Good Performance)";
-        return "⭐⭐⭐ (Average Performance)";
     }
 
     private void display(JTextArea a, String title, List<Process> list, double avgWT) {
@@ -229,5 +244,16 @@ public class MainDashboard extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new MainDashboard().setVisible(true));
+    }
+    private double getAvgRT(List<Process> list) {
+        double total = 0;
+        for (Process p : list) total += p.responseTime;
+        return total / list.size();
+    }
+
+    private double getAvgTAT(List<Process> list) {
+        double total = 0;
+        for (Process p : list) total += p.turnaroundTime;
+        return total / list.size();
     }
 }
