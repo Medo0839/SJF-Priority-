@@ -1,0 +1,14 @@
+Scenario C: Fairness or Starvation-Sensitive Case
+
+ Input Data:
+o P1: Arrival=0, Burst=10, Priority=10 (Long & Low Priority)
+o P2: Arrival=1, Burst=2, Priority=1
+o P3: Arrival=2, Burst=1, Priority=2
+
+Description
+
+"This scenario demonstrates starvation risks.
+In SJF Preemptive, P1 suffers the most as it is constantly interrupted by shorter jobs.
+In Priority, P1 stays at the end of the queue because of its low priority.
+Interestingly, Non-Preemptive SJF provides a bit more fairness to P1 once it starts,
+as it cannot be interrupted by the arriving P2 and P3." 
